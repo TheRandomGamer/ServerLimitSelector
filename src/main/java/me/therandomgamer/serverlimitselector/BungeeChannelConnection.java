@@ -17,7 +17,7 @@ import java.util.LinkedList;
 public class BungeeChannelConnection implements PluginMessageListener {
 
     private static BungeeChannelConnection instance = null;
-    private HashMap<String,Integer> serverPlayers;
+    private HashMap<String, Integer> serverPlayers;
 
     public boolean isNeedCheck() {
         return needCheck;
@@ -30,21 +30,22 @@ public class BungeeChannelConnection implements PluginMessageListener {
     boolean needCheck;
 
 
-    protected BungeeChannelConnection() {}
+    protected BungeeChannelConnection() {
+    }
 
     public static BungeeChannelConnection getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new BungeeChannelConnection();
         }
         return instance;
     }
 
-    public void setServerPlayers(LinkedList<String> servers){
+    public void setServerPlayers(LinkedList<String> servers) {
         serverPlayers = new HashMap<>();
 
-        while (! servers.isEmpty()){
+        while (!servers.isEmpty()) {
 
-            serverPlayers.put(servers.getLast(),0);
+            serverPlayers.put(servers.getLast(), 0);
 
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("PlayerCount");
@@ -52,7 +53,7 @@ public class BungeeChannelConnection implements PluginMessageListener {
 
             Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
             if (player != null) {
-                player.sendPluginMessage(Main.getMain(),"BungeeCord", out.toByteArray());
+                player.sendPluginMessage(Main.getMain(), "BungeeCord", out.toByteArray());
             }
 
             servers.removeLast();
@@ -72,9 +73,25 @@ public class BungeeChannelConnection implements PluginMessageListener {
             String server = in.readUTF();
             int playercount = in.readInt();
             serverPlayers.remove(server);
-            serverPlayers.put(server,playercount);
+            serverPlayers.put(server, playercount);
         }
     }
+
+    public void connectPlayer(Player p, String server) {
+
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("Connect");
+        out.writeUTF(server);
+        if (p != null) {
+            p.sendPluginMessage(Main.getMain(), "BungeeCord", out.toByteArray());
+        }
+    }
+
+    public Integer getServerPlayers(String server){
+
+        return serverPlayers.get(server);
+    }
+
 }
 
 

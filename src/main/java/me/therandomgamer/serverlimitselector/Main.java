@@ -22,30 +22,35 @@ public class Main extends JavaPlugin implements Listener {
         super.onEnable();
         getLogger().info("ServerLimitSelector by TheRandomGamer has been enabled");
         main = this;
+        saveDefaultConfig();
 
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", BungeeChannelConnection.getInstance());
+
+        this.getServer().getPluginManager().registerEvents(this,this);
+        this.getServer().getPluginManager().registerEvents(new GUIHandler(),this);
 
         BungeeChannelConnection.getInstance().setNeedCheck(true);
         servers = this.getConfig().getConfigurationSection("servers").getKeys(false).stream().collect(Collectors.toCollection(() -> new LinkedList<>()));
     }
 
-    public static Main getMain(){
+    public static Main getMain() {
         return main;
     }
 
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent e){
+    public void onPlayerJoin(PlayerJoinEvent e) {
         BungeeChannelConnection bcc = BungeeChannelConnection.getInstance();
-        if(bcc.isNeedCheck()){
+        if (bcc.isNeedCheck()) {
             bcc.setServerPlayers(servers);
-
         }
+
+
+
     }
 
     @EventHandler
-    public void onPlayerLeave(PlayerQuitEvent e){
+    public void onPlayerLeave(PlayerQuitEvent e) {
         BungeeChannelConnection.getInstance().setServerPlayers(servers);
     }
-    
 }
