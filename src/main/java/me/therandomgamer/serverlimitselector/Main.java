@@ -47,7 +47,5 @@ public class Main extends JavaPlugin implements Listener {
     public void onPlayerLeave(PlayerQuitEvent e){
         BungeeChannelConnection.getInstance().setServerPlayers(servers);
     }
-
-
-
+    
 }
