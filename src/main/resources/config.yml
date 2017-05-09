@@ -5,6 +5,8 @@ servers:
     itemname:
   server2:
     maxplayers:
+    item:
+    itemname:
 
 selector:
   name: "Server Selector" #Name of the server selector compass
