@@ -52,7 +52,7 @@ public class GUIHandler implements Listener {
         FileConfiguration c = Main.getMain().getConfig();
         if (e.getInventory().getName() == c.getString("selector.name")) {
             e.setCancelled(true);
-            ItemStack is = e.getCursor();
+            ItemStack is = e.getCurrentItem();
             String name = is.getItemMeta().getDisplayName();
 
             for (String s : c.getConfigurationSection("servers").getKeys(false)) {
@@ -68,6 +68,7 @@ public class GUIHandler implements Listener {
                             bcc.connectPlayer(p, s);
                         } else {
                             p.sendMessage(c.getString("selector.fullMessage"));
+                            bcc.setServerPlayers(Main.getMain().getServers());
                         }
                     }
                     break;

@@ -88,6 +88,9 @@ public class BungeeChannelConnection implements PluginMessageListener {
     }
 
     public Integer getServerPlayers(String server){
+        if(serverPlayers.get(server) == null){
+            return 0;
+        }
 
         return serverPlayers.get(server);
     }
