@@ -18,7 +18,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
 
-
 /**
  * Created by robin on 08/05/17.
  */
@@ -61,8 +60,15 @@ public class GUIHandler implements Listener {
                     BungeeChannelConnection bcc = BungeeChannelConnection.getInstance();
                     int onlinePlayers = bcc.getServerPlayers(s);
                     int maxOnlinePlayers = c.getInt("servers." + s + ".maxplayers");
+                    Player p = (Player) e.getWhoClicked();
                     if (onlinePlayers < maxOnlinePlayers) {
-                        bcc.connectPlayer((Player) e.getWhoClicked(), s);
+                        bcc.connectPlayer(p, s);
+                    } else {
+                        if (p.hasPermission("serverlimitselector." + s)) {
+                            bcc.connectPlayer(p, s);
+                        } else {
+                            p.sendMessage(c.getString("selector.fullMessage"));
+                        }
                     }
                     break;
                 }

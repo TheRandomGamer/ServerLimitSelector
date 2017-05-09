@@ -1,8 +1,8 @@
-servers:
+servers: # You can add as much servers as you want, but keep in mind that the name should be the same as in bungeecord and that you have a maxplayers,item and itemname for every server
   server1:
-    maxplayers:
-    item:
-    itemname:
+    maxplayers: 1
+    item: "COBBLESTONE"
+    itemname:  "server1"
   server2:
     maxplayers:
     item:
@@ -10,3 +10,4 @@ servers:
 
 selector:
   name: "Server Selector" #Name of the server selector compass
+  fullMessage: "This server is currently full" #This is the message that will be displayed when a player can't join the server
